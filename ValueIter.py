@@ -53,7 +53,10 @@ def solve(states, y, e, printer=0):
             print(f"Stopping: Delta = {max_change}")
             print(f"Last Iteration: {iter+1}")
             for state in states.values():
-                print(state.name, state.value)
+                action_name = "End"
+                if state.terminal == 0:
+                    action_name = updates[state.name][1].name
+                print(state.name, state.value, action_name)
             print("----------")
             break
 
