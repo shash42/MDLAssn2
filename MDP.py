@@ -1,3 +1,9 @@
+ARR = [0.5, 1, 2]
+X = 32 # team number 
+Y = ARR[x % 3]
+
+STEP_COST = -10.0/Y 
+
 class Transition:
     def __init__(self, source, action, dest, prob, reward):
         self.source, self.action = source, action
@@ -10,7 +16,7 @@ class Action:
         self.qvalue = qvalue
         self.transitions = []
 
-    def add_transition(self, dest, prob, reward):
+    def add_transition(self, dest, prob, reward=STEP_COST):
         self.transitions.append(Transition(self.source, self.name, dest, prob, reward))
 
 class State:
