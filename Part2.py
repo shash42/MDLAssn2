@@ -5,8 +5,8 @@ GAMMA = 0.999
 DELTA = 1e-3 
 
 ARR = [0.5, 1, 2]
-X = 32 # team number 
-Y = ARR[x % 3]
+X = 108 # team number 
+Y = ARR[X % 3]
 
 STEP_COST = -10.0/Y 
 NEGATIVE_REWARD = -40
@@ -33,11 +33,11 @@ for p in POSITIONS:
 
                     if h == 0:
                         reward = 50 
-                        states[idx] = State(idx, reward, 1)
+                        states[idx] = State(idx, reward, state, 1)
                     else :
-                        states[idx] = State(idx, reward) 
+                        states[idx] = State(idx, reward, state) 
 
-                    ref[idx] = state 
+                    ref[state] = idx 
                     idx += 1 
 
 # Add actions 
@@ -46,11 +46,14 @@ for p in POSITIONS:
         for a in ARROWS:
             for mm in MM:
                 for h in HEALTH:
-                    if h == 0:
-                        continue 
 
                     cur = (p, m, a, mm, h)
                     now = ref[cur] 
+
+                    if h == 0:
+                        states[now].add_action(Action(now, "NONE"))
+                        continue 
+
                     states[now].add_action(Action(now, "STAY"))
 
                     if p == "W":
@@ -92,12 +95,13 @@ for p in POSITIONS:
             for mm in MM:
                 for h in HEALTH:
 
-                    # Terminal 
-                    if h == 0 :
-                        continue 
-
                     cur = (p, m, a, mm, h)
                     now = ref[cur] 
+
+                    # Terminal 
+                    if h == 0 :
+                        states[now].actions["NONE"].add_transition(now, 1, 0)
+                        continue 
 
                     if p == "W":
                         nxt = ("C", m, a, mm, h)
@@ -423,4 +427,4 @@ for p in POSITIONS:
 # for transition in states["A"].actions["rt"].transitions:
 #     print(transition.source, transition.action, transition.dest)
 
-# ValueIter.solve(states, GAMMA, DELTA, 1)
+ValueIter.solve(states, GAMMA, DELTA, 0)

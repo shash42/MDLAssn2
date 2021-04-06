@@ -1,6 +1,6 @@
 ARR = [0.5, 1, 2]
-X = 32 # team number 
-Y = ARR[x % 3]
+X = 108 # team number 
+Y = ARR[X % 3]
 
 STEP_COST = -10.0/Y 
 
@@ -20,8 +20,9 @@ class Action:
         self.transitions.append(Transition(self.source, self.name, dest, prob, reward))
 
 class State:
-    def __init__(self, name, value=0, terminal=0):
+    def __init__(self, name, value=0, repr = "", terminal=0):
         self.name = name
+        self.repr = repr
         self.value = value
         self.terminal = terminal
         self.actions = {}
