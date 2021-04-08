@@ -22,6 +22,10 @@ ref = {}
 states = {}
 idx = 0 
 
+CASE1 = 0
+CASE2 = 0 
+CASE3 = 0
+
 # Add states
 for p in POSITIONS:
     for m in MATERIALS:
@@ -149,8 +153,12 @@ for p in POSITIONS:
                             states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .8)
                             states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .2)
                             
-                            states[now].actions["LEFT"].add_transition(ref[("C", m, a, mm, h)], .8)
-                            states[now].actions["LEFT"].add_transition(ref[("C", m, a, 'R', h)], .2)
+                            if not CASE1 :
+                                states[now].actions["LEFT"].add_transition(ref[("C", m, a, mm, h)], .8)
+                                states[now].actions["LEFT"].add_transition(ref[("C", m, a, 'R', h)], .2)
+                            else :
+                                states[now].actions["LEFT"].add_transition(ref[("W", m, a, mm, h)], .8)
+                                states[now].actions["LEFT"].add_transition(ref[("W", m, a, 'R', h)], .2)
 
                             states[now].actions["HIT"].add_transition(ref[(p, m, a, mm, max(0, h - 50) )], 0.2 * .8)
                             states[now].actions["HIT"].add_transition(ref[(p, m, a, 'R', max(0, h - 50) )], 0.2 * .2)
@@ -169,8 +177,12 @@ for p in POSITIONS:
                             states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .5)
                             states[now].actions["STAY"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, STEP_COST + NEGATIVE_REWARD)
                             
-                            states[now].actions["LEFT"].add_transition(ref[("C", m, a, mm, h)], .5)
-                            states[now].actions["LEFT"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, STEP_COST + NEGATIVE_REWARD)
+                            if not CASE1:
+                                states[now].actions["LEFT"].add_transition(ref[("C", m, a, mm, h)], .5)
+                                states[now].actions["LEFT"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, STEP_COST + NEGATIVE_REWARD)
+                            else :
+                                states[now].actions["LEFT"].add_transition(ref[("W", m, a, mm, h)], .5)
+                                states[now].actions["LEFT"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, STEP_COST + NEGATIVE_REWARD)
 
                             states[now].actions["HIT"].add_transition(ref[(p, m, a, mm, max(0, h - 50) )], 0.2 * .5)
                             states[now].actions["HIT"].add_transition(ref[(p, m, a, mm, h)], 0.8 * .5)
@@ -401,8 +413,8 @@ def case2():
     return 
 
 
-GAMMA = 0.25 
-ValueIter.solve(states, GAMMA, DELTA, 0)
+# GAMMA = 0.25 
+ValueIter.solve(states, GAMMA, DELTA, 0, "Case 0 Trace.txt")
 print(STEP_COST)
 
 def simulate(state):
@@ -432,10 +444,10 @@ def simulate(state):
         discount *= GAMMA 
 
     cumalative_reward += 50 
-    print("Final Reward:", round(cumalative_reward, 3))
+    print("Overall Reward:", round(cumalative_reward, 3))
     
 
 
 # start_state = ('W', 0, 0, 'D', 100)
-# start_state = ('C', 2, 0, 'R', 100) 
+start_state = ('C', 2, 0, 'R', 100) 
 simulate(start_state)
