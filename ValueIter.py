@@ -3,8 +3,10 @@ import sys
 
 def state_print(states, iter=-1):
     if iter != -1:
-        print(f"Iteration: {iter}")
+        print(f"iteration={iter}")
     for state in states.values():
+        a, b, c, d, e = state.repr 
+        # print("({a},{b},{c},{d},{e}):{"
         print(state.name, state.value)
     print("----------")
 
@@ -33,8 +35,8 @@ def solve(states, y, e, printer=0):
 
                 for transition in action.transitions:
                     action.qvalue +=  transition.prob * (y*states[transition.dest].value + transition.reward)
-                if iter==0:
-                    print(state.name, action.name, transition.dest, action.qvalue)
+                # if iter==0:
+                #     print(state.name, action.name, transition.dest, action.qvalue)
                 if action.qvalue > best_action[0]:
                     best_action = [action.qvalue, action]
             
@@ -50,20 +52,28 @@ def solve(states, y, e, printer=0):
                 max_change = change
             states[name].value = value
 
+        og = sys.stdout
+        sys.stdout = open("Part2Trace1.txt", "a")
+
+        # print(f"Stopping: Delta = {max_change}")
+        # print(f"Last Iteration: {iter+1}")
+        
+        print(f"iteration={iter}")
+        for state in states.values():
+            action_name = "NONE"
+            if state.terminal == 0:
+                action_name = updates[state.name][1].name
+            
+            a, b, c, d, f = state.repr 
+            val = round(state.value, 3)
+            print(f"({a},{b},{c},{d},{f}):{action_name}=[{val}]")
+
+            # print(state.repr, state.value, action_name)
+        # print("----------")
+        sys.stdout = og 
+        
+        print(max_change, iter)
         if max_change < e:
-            og = sys.stdout
-            sys.stdout = open("Part2Trace.txt", "w")
-
-            print(f"Stopping: Delta = {max_change}")
-            print(f"Last Iteration: {iter+1}")
-            for state in states.values():
-                action_name = "End"
-                if state.terminal == 0:
-                    action_name = updates[state.name][1].name
-                print(state.repr, state.value, action_name)
-            print("----------")
-
-            sys.stdout = og 
             break
 
         iter+=1
