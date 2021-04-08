@@ -413,6 +413,7 @@ def simulate(state):
 
     iterations = 0
     MAX_ITERATIONS = 100
+    discount = 1 
 
     # print(states[idx].get_best_action().name)
     while not states[idx].terminal :
@@ -420,17 +421,18 @@ def simulate(state):
         action = cur.get_best_action()
         idx, r = action.take_action()
         nxt = states[idx] 
-        cumalative_reward += r 
-        print(cur.repr, action.name, nxt.repr, cumalative_reward) 
+        cumalative_reward += discount * r 
+        print(cur.repr, action.name, nxt.repr, round(cumalative_reward, 3)) 
 
         if iterations > MAX_ITERATIONS :
             print("End state not reached")
             return 
 
         iterations += 1 
+        discount *= GAMMA 
 
     cumalative_reward += 50 
-    print("Final Reward:", cumalative_reward)
+    print("Final Reward:", round(cumalative_reward, 3))
     
 
 

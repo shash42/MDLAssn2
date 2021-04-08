@@ -13,8 +13,10 @@ def state_print(states, iter=-1):
 def solve(states, y, e, printer=0):
     INF = 1e15
     iter = 0
+
+    f = open("Part2Trace1.txt", "w")
     while True:
-        if iter>200:
+        if iter>150:
             print("Hard break")
             break
 
@@ -52,21 +54,21 @@ def solve(states, y, e, printer=0):
                 max_change = change
             states[name].value = value
 
-        og = sys.stdout
-        sys.stdout = open("Part2Trace1.txt", "a")
 
         # print(f"Stopping: Delta = {max_change}")
         # print(f"Last Iteration: {iter+1}")
-        
+        og = sys.stdout 
+        sys.stdout = f 
+
         print(f"iteration={iter}")
         for state in states.values():
             action_name = "NONE"
             if state.terminal == 0:
                 action_name = updates[state.name][1].name
             
-            a, b, c, d, f = state.repr 
+            a, b, c, d, w = state.repr 
             val = round(state.value, 3)
-            print(f"({a},{b},{c},{d},{f}):{action_name}=[{val}]")
+            print(f"({a},{b},{c},{d},{w}):{action_name}=[{val}]")
 
             # print(state.repr, state.value, action_name)
         # print("----------")
@@ -78,4 +80,5 @@ def solve(states, y, e, printer=0):
 
         iter+=1
 
+    f.close()
     return states
