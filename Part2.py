@@ -120,8 +120,8 @@ for p in POSITIONS:
                         #     states[now].actions["SHOOT"].add_transition(ref[(p, m, a - 1, mm, h)], 0.75)
 
                         if mm == 'D':
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .8)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .2)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .2, 0)
                             
                             states[now].actions["RIGHT"].add_transition(ref[("C", m, a, mm, h)], .8)
                             states[now].actions["RIGHT"].add_transition(ref[("C", m, a, 'R', h)], .2)
@@ -135,8 +135,8 @@ for p in POSITIONS:
 
                             
                         else:
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .5)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'D', h)], .5)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .5, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'D', h)], .5, 0)
                             
                             states[now].actions["RIGHT"].add_transition(ref[("C", m, a, mm, h)], .5)
                             states[now].actions["RIGHT"].add_transition(ref[("C", m, a, 'D', h)], .5)
@@ -150,8 +150,8 @@ for p in POSITIONS:
 
                     elif p == "E":
                         if mm == "D" :
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .8)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .2)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .2, 0)
                             
                             if not CASE1 :
                                 states[now].actions["LEFT"].add_transition(ref[("C", m, a, mm, h)], .8)
@@ -174,8 +174,8 @@ for p in POSITIONS:
                                 states[now].actions["SHOOT"].add_transition(ref[(p, m, a - 1, 'R', h)], 0.1 * .2)
 
                         else :
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .5)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, STEP_COST + NEGATIVE_REWARD)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .5, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, NEGATIVE_REWARD)
                             
                             if not CASE1:
                                 states[now].actions["LEFT"].add_transition(ref[("C", m, a, mm, h)], .5)
@@ -205,11 +205,11 @@ for p in POSITIONS:
 
                         # states[now].actions["STAY"].add_transition(now, .85)
                         if mm == 'D':
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .8)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .85 * .2)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .85 * .2, 0)
 
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .8)
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'R', h)], .15 * .2)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'R', h)], .15 * .2, 0)
 
                             # states[now].actions["UP"].add_transition(pos, .85)
                             states[now].actions["UP"].add_transition(ref[("C", m, a, mm, h)], .85 * .8)
@@ -226,11 +226,11 @@ for p in POSITIONS:
                             states[now].actions["GATHER"].add_transition(ref[(p, m, a, 'R', h)], .25 * .2)
 
                         else :
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .5 * .8)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'D', h)], .5 * .2)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .5 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'D', h)], .5 * .2, 0)
 
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .5 * .8)
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'D', h)], .5 * .2)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .5 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'D', h)], .5 * .2, 0)
 
                             states[now].actions["UP"].add_transition(ref[("C", m, a, mm, h)], .5 * .8)
                             states[now].actions["UP"].add_transition(ref[("C", m, a, 'D', h)], .5 * .2)
@@ -249,11 +249,11 @@ for p in POSITIONS:
                             states[now].actions["RIGHT"].add_transition(ref[("E", m, a, mm, h)], .8)
                             states[now].actions["RIGHT"].add_transition(ref[("E", m, a, 'R', h)], .2)
 
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .8)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .85 * .2)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .85 * .2, 0)
                             
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .8)
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'R', h)], .15 * .2)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'R', h)], .15 * .2, 0)
                             
                             states[now].actions["DOWN"].add_transition(ref[("S", m, a, mm, h)], .85 * .8)
                             states[now].actions["DOWN"].add_transition(ref[("S", m, a, 'R', h)], .85 * .2)
@@ -288,9 +288,9 @@ for p in POSITIONS:
 
                         else :
 
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .5)
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .5)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, STEP_COST + NEGATIVE_REWARD)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .5, 0)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .5, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, 0, 'D', min(100, h + 25))], .5, NEGATIVE_REWARD)
                             
                             states[now].actions["LEFT"].add_transition(ref[("W", m, a, mm, h)], .85 * .5)
                             states[now].actions["LEFT"].add_transition(ref[("E", m, a, mm, h)], .15 * .5)
@@ -343,11 +343,11 @@ for p in POSITIONS:
 
                         if mm == 'D':
                             
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .8)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .85 * .2)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'R', h)], .85 * .2, 0)
 
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .8)
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'R', h)], .15 * .2)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .8, 0)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'R', h)], .15 * .2, 0)
 
                             # states[now].actions["UP"].add_transition(pos, .85)
                             states[now].actions["DOWN"].add_transition(ref[("C", m, a, mm, h)], .85 * .8)
@@ -375,11 +375,11 @@ for p in POSITIONS:
                         else :
                             
                             
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .5)
-                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'D', h)], .85 * .5)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, mm, h)], .85 * .5, 0)
+                            states[now].actions["STAY"].add_transition(ref[(p, m, a, 'D', h)], .85 * .5, 0)
 
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .5)
-                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'D', h)], .15 * .5)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, mm, h)], .15 * .5, 0)
+                            states[now].actions["STAY"].add_transition(ref[("E", m, a, 'D', h)], .15 * .5, 0)
 
                             # states[now].actions["UP"].add_transition(pos, .85)
                             states[now].actions["DOWN"].add_transition(ref[("C", m, a, mm, h)], .85 * .5)
@@ -414,7 +414,10 @@ def case2():
 
 
 # GAMMA = 0.25 
-ValueIter.solve(states, GAMMA, DELTA, 0, "Case 0 Trace.txt")
+"""
+NOTE: Code has been modified to make STEP COST for STAY 0. Please undo these changes for the original problem. 
+"""
+ValueIter.solve(states, GAMMA, DELTA, 0, "policy2.txt")
 print(STEP_COST)
 
 def simulate(state):

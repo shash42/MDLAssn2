@@ -10,7 +10,7 @@ def state_print(states, iter=-1):
         print(state.name, state.value)
     print("----------")
 
-def solve(states, y, e, printer=0, fileName="Case 10 Trace.txt"):
+def solve(states, y, e, printer=0, fileName="Case -1 Trace.txt"):
     INF = 1e15
     iter = 0
 
@@ -60,18 +60,19 @@ def solve(states, y, e, printer=0, fileName="Case 10 Trace.txt"):
         og = sys.stdout 
         sys.stdout = f 
 
-        print(f"iteration={iter}")
-        for state in states.values():
-            action_name = "NONE"
-            if state.terminal == 0:
-                action_name = updates[state.name][1].name
-            
-            a, b, c, d, w = state.repr 
-            val = round(state.value, 3)
-            print(f"({a},{b},{c},{d},{w}):{action_name}=[{val}]")
+        if max_change < e:
+            print(f"iteration={iter}")
+            for state in states.values():
+                action_name = "NONE"
+                if state.terminal == 0:
+                    action_name = updates[state.name][1].name
+                
+                a, b, c, d, w = state.repr 
+                val = round(state.value, 3)
+                print(f"({a},{b},{c},{d},{w}):{action_name}") #"=[{val}]")
 
-            # print(state.repr, state.value, action_name)
-        # print("----------")
+                # print(state.repr, state.value, action_name)
+            # print("----------")
         sys.stdout = og 
         
         print(max_change, iter)
