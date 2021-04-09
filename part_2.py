@@ -413,8 +413,8 @@ def case2():
     return 
 
 
-# GAMMA = 0.25 
-ValueIter.solve(states, GAMMA, DELTA, 0, "Case 0 Trace.txt")
+# GAMMA = 0.25
+ValueIter.solve(states, GAMMA, DELTA, 0, "outputs/part_2_trace.txt")
 print(STEP_COST)
 
 def simulate(state):
