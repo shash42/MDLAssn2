@@ -46,12 +46,12 @@ class LP:
                 if action.name == "NONE":
                     a[i][idx] += 1
                     idx += 1
-                    continue
-                
+                    break
+
                 for trans in action.transitions:                
                     dest_idx = self.getidx_of_state(trans.dest)
-                    if dest_idx == i:
-                        continue
+                    #if dest_idx == i:
+                    #    continue
                     a[i][idx] += trans.prob
                     a[dest_idx][idx] -= trans.prob
 

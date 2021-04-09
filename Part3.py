@@ -10,6 +10,7 @@ X = 108 # team number
 Y = ARR[X % 3]
 
 STEP_COST = -10.0/Y 
+#STEP_COST = -10.0
 NEGATIVE_REWARD = -40
 
 POSITIONS = ["W", "N", "E", "S", "C"]
@@ -37,7 +38,7 @@ for p in POSITIONS:
                     state = (p, m, a, mm, h)
 
                     if h == 0:
-                        reward = 50 
+                        #reward = 50 
                         states[idx] = State(idx, reward, state, 1)
                     else :
                         states[idx] = State(idx, reward, state) 
@@ -417,42 +418,11 @@ def case2():
 # GAMMA = 0.25 
 #ValueIter.solve(states, GAMMA, DELTA, 0, "Case 0 Trace.txt")
 print(STEP_COST)
-
-def simulate(state):
-    start_state = state 
-    print('START STATE:', start_state)
-    cumalative_reward = 0
-    idx = ref[start_state]
-
-    iterations = 0
-    MAX_ITERATIONS = 100
-    discount = 1 
-
-    # print(states[idx].get_best_action().name)
-    while not states[idx].terminal :
-        cur = states[idx] 
-        action = cur.get_best_action()
-        idx, r = action.take_action()
-        nxt = states[idx] 
-        cumalative_reward += discount * r 
-        print(cur.repr, action.name, nxt.repr, round(cumalative_reward, 3)) 
-
-        if iterations > MAX_ITERATIONS :
-            print("End state not reached")
-            return 
-
-        iterations += 1 
-        discount *= GAMMA 
-
-    cumalative_reward += 50 
-    print("Overall Reward:", round(cumalative_reward, 3))
     
 def simulateLP(start_state):
     model = LP(states, GAMMA, STEP_COST, ref[start_state])
     model.execute()
 
-
 # start_state = ('W', 0, 0, 'D', 100)
 start_state = ('C', 2, 3, 'R', 100) 
-#simulate(start_state)
 simulateLP(start_state)

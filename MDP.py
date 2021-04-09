@@ -3,6 +3,7 @@ X = 108 # team number
 Y = ARR[X % 3]
 
 STEP_COST = -10.0/Y 
+#STEP_COST = -10.0
 
 import numpy as np 
 
