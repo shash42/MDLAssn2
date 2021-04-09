@@ -13,6 +13,14 @@ class LP:
         self.policy = []
         self.solution_dict = {}
         self.objective = 0.0
+        name_idx_map = {}
+        idx = 0
+        for name, s in self.states.items():
+            name_idx_map.update(name, idx)
+            idx += 1
+
+    def getidx_of_state(self, name):
+        return name_idx_map[name]
     
     def get_tot_actions(self):
         tot_actions = 0
@@ -24,7 +32,7 @@ class LP:
         a = np.zeros((len(self.states), self.dim), dtype=np.float64)
 
         idx = 0
-        i = 0
+        i=0
         for name, s in self.states.items():
             for action in s.actions:
                 a[i][idx] += 1
@@ -33,7 +41,7 @@ class LP:
                     next_states.append(trans)
                 
                 for next_state in next_states:
-                    a[next_state.dest][idx] -= next_state.prob
+                    a[next_state.dest][idx] -= next_state.prob #next_state.dest should hash to an index
 
                 # increment idx
                 idx += 1
