@@ -453,6 +453,6 @@ def simulateLP(start_state):
 
 
 # start_state = ('W', 0, 0, 'D', 100)
-start_state = ('C', 2, 0, 'R', 100) 
+start_state = ('C', 2, 3, 'R', 100) 
 #simulate(start_state)
 simulateLP(start_state)

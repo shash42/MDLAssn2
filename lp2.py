@@ -43,21 +43,25 @@ class LP:
         i = 0
         for name, s in self.states.items():
             for a_name, action in s.actions.items():
-                a[i][idx] += 1
-                next_states = []
-                for trans in action.transitions:
-                    next_states.append(trans)
+                if action.name == "NONE":
+                    a[i][idx] += 1
+                    idx += 1
+                    continue
                 
-                for next_state in next_states:
-                    dest_idx = self.getidx_of_state(next_state.dest)
+                for trans in action.transitions:                
+                    dest_idx = self.getidx_of_state(trans.dest)
                     if dest_idx == i:
                         continue
-                    a[dest_idx][idx] -= next_state.prob
+                    a[i][idx] += trans.prob
+                    a[dest_idx][idx] -= trans.prob
 
-                # increment idx
                 idx += 1
             i += 1
-
+        
+        start_idx = self.getidx_of_state(self.init_state.name)
+        for j in range(a.shape[1]):
+            if a[start_idx][j] != 0:
+                print(start_idx, j, a[start_idx][j])
         return a
 
     def get_r(self):
@@ -65,18 +69,16 @@ class LP:
 
         idx = 0
         for name, s in self.states.items():
-            for action_name in s.actions:
-                #change from here
+            for action_name, action in s.actions.items():
                 if action_name == "NONE":
                     r[0][idx] = 0
                     idx += 1
-                    continue
-            
-            for name, action in s.actions.items():
-                # r[0][idx] += self.step_cost
+                    break
+
                 for trans in action.transitions:
                     r[0][idx] += trans.prob * trans.reward
-       
+                idx+=1
+        #print(f"num_actions {idx}")
         return r
 
     def get_alpha(self):
